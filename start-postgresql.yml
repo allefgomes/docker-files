@@ -9,9 +9,20 @@ services:
       POSTGRES_PASSWORD: pgdocker
     ports:
       - 5432:5432
+    networks:
+      - postgres-network
 
   adminer:
-    image: adminer
+    image: dpage/pgadmin4
     restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgdocker@pgdocker.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgdocker"
     ports:
-      - 8080:8080
+      - 16543:80
+    networks:
+      - postgres-network
+
+networks: 
+  postgres-network:
+    driver: bridge
